@@ -17,12 +17,28 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 유틸리티 함수 ---
 
     function showMessage(message, type = 'info') {
+        // 이전 색상 클래스 제거
+        messageArea.classList.remove('bg-green-500', 'bg-red-500', 'bg-blue-500');
+
+        // 유형에 따라 색상 설정
+        if (type === 'success') {
+            messageArea.classList.add('bg-green-500');
+        } else if (type === 'error') {
+            messageArea.classList.add('bg-red-500');
+        } else { // 'info'
+            messageArea.classList.add('bg-blue-500');
+        }
+        
         messageArea.textContent = message;
-        messageArea.className = `message-area show ${type}`;
-        // 메시지 3초 후 자동 숨김
+        
+        // 메시지 보이기
+        messageArea.classList.remove('opacity-0', 'invisible');
+        messageArea.classList.add('opacity-100', 'visible');
+
+        // 3초 후에 숨기기
         setTimeout(() => {
-            messageArea.classList.remove('show');
-            messageArea.textContent = '';
+            messageArea.classList.remove('opacity-100', 'visible');
+            messageArea.classList.add('opacity-0', 'invisible');
         }, 3000);
     }
 

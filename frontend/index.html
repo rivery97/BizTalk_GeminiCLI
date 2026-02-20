@@ -4,46 +4,61 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BizTone Converter</title>
-    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <div id="app">
-        <header>
-            <h1>BizTone Converter</h1>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+    <div id="app" class="w-full max-w-4xl bg-white rounded-lg shadow-lg overflow-hidden">
+        <header class="bg-indigo-600 text-white p-6">
+            <h1 class="text-3xl font-bold text-center">BizTone Converter</h1>
         </header>
-        <main>
-            <section class="card input-section">
-                <h2>원문 입력</h2>
-                <textarea id="inputText" placeholder="업무상 전달하고 싶은 내용을 입력하세요. (최대 500자)" maxlength="500"></textarea>
-                <div class="char-count">
+        <main class="grid md:grid-cols-2 gap-6 p-6">
+            <section class="card input-section flex flex-col gap-4">
+                <h2 class="text-2xl font-semibold text-indigo-700">원문 입력</h2>
+                <textarea id="inputText" placeholder="업무상 전달하고 싶은 내용을 입력하세요. (최대 500자)" maxlength="500" class="w-full h-48 p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 resize-y"></textarea>
+                <div class="text-sm text-right text-gray-500 pr-1">
                     <span id="currentCharCount">0</span> / 500
                 </div>
                 
-                <div class="target-selection">
-                    <h3>대상 선택</h3>
-                    <label><input type="radio" name="target" value="상사" checked> 상사</label>
-                    <label><input type="radio" name="target" value="타팀 동료"> 타팀 동료</label>
-                    <label><input type="radio" name="target" value="고객"> 고객</label>
+                <div>
+                    <h3 class="text-lg font-medium text-gray-800 mb-2">대상 선택</h3>
+                    <div class="target-selection flex items-center gap-4">
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="radio" name="target" value="상사" checked class="form-radio text-indigo-600 focus:ring-indigo-500">
+                            <span class="text-gray-700">상사</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="radio" name="target" value="타팀 동료" class="form-radio text-indigo-600 focus:ring-indigo-500">
+                            <span class="text-gray-700">타팀 동료</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="radio" name="target" value="고객" class="form-radio text-indigo-600 focus:ring-indigo-500">
+                             <span class="text-gray-700">고객</span>
+                        </label>
+                    </div>
                 </div>
                 
-                <button id="convertButton" class="btn primary">변환하기</button>
+                <button id="convertButton" class="w-full bg-indigo-600 text-white font-bold py-3 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                    변환하기
+                </button>
             </section>
             
-            <section class="card output-section">
-                <h2>변환 결과</h2>
-                <textarea id="outputText" readonly placeholder="변환된 텍스트가 여기에 표시됩니다."></textarea>
-                <div class="button-group">
-                    <button id="copyButton" class="btn secondary">복사하기</button>
-                    <div class="feedback-section">
-                        <span>결과가 유용했나요?</span>
-                        <button id="feedbackHelpful" class="btn feedback-btn">👍 도움됨</button>
-                        <button id="feedbackNotHelpful" class="btn feedback-btn">👎 도움 안 됨</button>
+            <section class="card output-section flex flex-col gap-4">
+                <h2 class="text-2xl font-semibold text-indigo-700">변환 결과</h2>
+                <textarea id="outputText" readonly placeholder="변환된 텍스트가 여기에 표시됩니다." class="w-full h-48 p-3 border border-gray-300 rounded-md bg-gray-50 resize-y"></textarea>
+                <div class="button-group flex flex-col sm:flex-row items-center justify-between gap-4 mt-auto">
+                    <button id="copyButton" class="w-full sm:w-auto bg-gray-200 text-gray-800 font-bold py-2 px-6 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 transition-colors disabled:opacity-50">
+                        복사하기
+                    </button>
+                    <div class="feedback-section flex items-center gap-2">
+                        <span class="text-sm text-gray-600">결과가 유용했나요?</span>
+                        <button id="feedbackHelpful" class="text-2xl hover:scale-110 transition-transform">👍</button>
+                        <button id="feedbackNotHelpful" class="text-2xl hover:scale-110 transition-transform">👎</button>
                     </div>
                 </div>
             </section>
         </main>
         
-        <div id="messageArea" class="message-area"></div>
+        <div id="messageArea" class="fixed bottom-5 right-5 p-4 rounded-md text-white transition-all duration-300 opacity-0 invisible"></div>
     </div>
 
     <script src="js/script.js"></script>
