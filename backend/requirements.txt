@@ -1,4 +1,4 @@
 Flask
-Flask-Cors
 python-dotenv
+Flask-CORS
 groq

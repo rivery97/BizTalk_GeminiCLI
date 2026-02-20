@@ -7,10 +7,44 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <h1>BizTone Converter</h1>
-    <p>1단계: 환경 설정 및 API 연동</p>
-    <p>백엔드 서버의 기본 구조가 준비되었습니다.</p>
-    <p>다음 단계에서 이곳에 UI가 구현될 예정입니다.</p>
+    <div id="app">
+        <header>
+            <h1>BizTone Converter</h1>
+        </header>
+        <main>
+            <section class="card input-section">
+                <h2>원문 입력</h2>
+                <textarea id="inputText" placeholder="업무상 전달하고 싶은 내용을 입력하세요. (최대 500자)" maxlength="500"></textarea>
+                <div class="char-count">
+                    <span id="currentCharCount">0</span> / 500
+                </div>
+                
+                <div class="target-selection">
+                    <h3>대상 선택</h3>
+                    <label><input type="radio" name="target" value="상사" checked> 상사</label>
+                    <label><input type="radio" name="target" value="타팀 동료"> 타팀 동료</label>
+                    <label><input type="radio" name="target" value="고객"> 고객</label>
+                </div>
+                
+                <button id="convertButton" class="btn primary">변환하기</button>
+            </section>
+            
+            <section class="card output-section">
+                <h2>변환 결과</h2>
+                <textarea id="outputText" readonly placeholder="변환된 텍스트가 여기에 표시됩니다."></textarea>
+                <div class="button-group">
+                    <button id="copyButton" class="btn secondary">복사하기</button>
+                    <div class="feedback-section">
+                        <span>결과가 유용했나요?</span>
+                        <button id="feedbackHelpful" class="btn feedback-btn">👍 도움됨</button>
+                        <button id="feedbackNotHelpful" class="btn feedback-btn">👎 도움 안 됨</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <div id="messageArea" class="message-area"></div>
+    </div>
 
     <script src="js/script.js"></script>
 </body>
