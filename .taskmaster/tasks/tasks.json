@@ -1,0 +1,134 @@
+{
+  "master": {
+    "tasks": [
+      {
+        "id": "1",
+        "title": "프로젝트 환경 설정 및 백엔드 스켈레톤 구축",
+        "description": "Python 가상 환경을 설정하고 Flask 서버의 기본 구조 및 의존성 라이브러리를 설치합니다.",
+        "details": "1. `backend/` 폴더 내에 `requirements.txt` 생성 (flask, flask-cors, python-dotenv, groq 설치).\n2. `.env` 파일을 생성하여 `GROQ_API_KEY` 환경 변수 설정.\n3. `backend/app.py`에 기본적인 Flask 앱 인스턴스 생성 및 CORS(Cross-Origin Resource Sharing) 설정.\n4. 정적 파일(index.html 등) 서빙을 위한 라우트 설정 확인.",
+        "testStrategy": "Flask 서버를 실행하고 `localhost:5000`에서 'Hello World' 또는 정적 파일이 정상적으로 로드되는지 확인합니다.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": "2",
+        "title": "반응형 프론트엔드 레이아웃 구현",
+        "description": "PRD의 디자인 원칙에 따라 HTML과 CSS를 사용하여 2단 분할 레이아웃을 구현합니다.",
+        "details": "1. `frontend/index.html`에 원문 입력 영역(Textarea), 대상 선택(Radio/Select), 결과 출력 영역 구조화.\n2. `frontend/css/style.css`에서 Flexbox 또는 Grid를 사용하여 데스크톱(좌/우), 모바일(상/하) 반응형 레이아웃 구현.\n3. 지정된 색상 팔레트(`#4A90E2`, `#F5F7FA`) 및 Pretendard 폰트 적용.",
+        "testStrategy": "브라우저 개발자 도구를 사용하여 다양한 화면 너비(768px 기준)에서 레이아웃이 정상적으로 전환되는지 확인합니다.",
+        "priority": "high",
+        "dependencies": [
+          "1"
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": "3",
+        "title": "실시간 글자 수 제한 및 입력 편의 기능 구현",
+        "description": "사용자가 입력하는 텍스트의 길이를 실시간으로 표시하고 최대 길이를 제한합니다.",
+        "details": "1. `frontend/js/script.js`에서 입력창의 `input` 이벤트를 리스닝.\n2. `현재 글자 수 / 500` 형태의 UI를 실시간으로 업데이트.\n3. 500자 초과 시 입력을 차단하거나 경고 메시지 표시.",
+        "testStrategy": "텍스트 입력 시 하단 카운터가 즉각적으로 변하는지 확인하고 500자 이상의 텍스트를 붙여넣었을 때 제한되는지 테스트합니다.",
+        "priority": "medium",
+        "dependencies": [
+          "2"
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": "4",
+        "title": "Groq AI API 연동 및 말투 변환 로직 구현",
+        "description": "Groq 클라이언트를 사용하여 실제 말투 변환을 처리하는 백엔드 API를 구현합니다.",
+        "details": "1. `backend/app.py`의 `/api/convert` 엔드포인트 구현 (POST 방식).\n2. `moonshotai/kimi-k2-instruct-0905` 모델 사용.\n3. 대상(상사, 동료, 고객)에 따른 한국어 프롬프트 엔지니어링 적용.\n   - 상사: 정중한 격식체, 결론 위주.\n   - 동료: 친절하고 명확한 협조 요청.\n   - 고객: 극존칭, 전문성 강조.\n4. 에러 발생 시 적절한 HTTP 상태 코드 및 메시지 반환.",
+        "testStrategy": "Postman 또는 Curl을 사용하여 `/api/convert`에 텍스트와 대상을 보내고 의도한 톤의 응답이 오는지 확인합니다.",
+        "priority": "high",
+        "dependencies": [
+          "1"
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": "5",
+        "title": "프론트엔드-백엔드 비동기 통신 통합",
+        "description": "Fetch API를 사용하여 사용자의 입력을 백엔드로 전송하고 결과를 화면에 표시합니다.",
+        "details": "1. '변환하기' 버튼 클릭 시 `frontend/js/script.js`에서 `/api/convert` 호출.\n2. 변환 중일 때 버튼 내부에 스피너 애니메이션 표시 및 버튼 비활성화.\n3. 결과 수신 시 우측 결과창에 텍스트 렌더링.",
+        "testStrategy": "실제 웹 화면에서 텍스트를 입력하고 버튼을 눌러 AI가 생성한 결과가 결과창에 나타나는지 확인합니다.",
+        "priority": "high",
+        "dependencies": [
+          "2",
+          "4"
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": "6",
+        "title": "복사하기 기능 및 사용자 피드백(Toast) 구현",
+        "description": "변환된 결과를 클립보드에 복사하고 성공 여부를 사용자에게 알립니다.",
+        "details": "1. `navigator.clipboard.writeText` API를 사용하여 복사 기능 구현.\n2. 복사 성공 시 '복사되었습니다!'라는 메시지를 담은 Toast 알림 UI 구현 및 표시.\n3. 버튼 클릭 시 시각적 피드백(색상 변경 등) 추가.",
+        "testStrategy": "복사 버튼 클릭 후 메모장에 붙여넣기(Ctrl+V)하여 내용이 일치하는지 확인하고 Toast 메시지가 나타나는지 확인합니다.",
+        "priority": "medium",
+        "dependencies": [
+          "5"
+        ],
+        "status": "cancelled",
+        "subtasks": [],
+        "updatedAt": "2026-02-20T08:52:30.280Z"
+      },
+      {
+        "id": "7",
+        "title": "에러 핸들링 및 재시도 로직 구현",
+        "description": "API 호출 실패 시 사용자에게 오류를 알리고 재시도할 수 있는 기능을 제공합니다.",
+        "details": "1. Fetch 실패(network error) 또는 API 에러 응답(500 등) 시 모달 또는 경고 문구 표시.\n2. '재시도' 버튼을 제공하여 마지막 입력값으로 다시 호출할 수 있게 구현.\n3. 사용자 친화적인 에러 메시지 작성.",
+        "testStrategy": "백엔드 서버를 일시 중지하거나 잘못된 API 키를 설정한 후 웹에서 변환을 시도하여 에러 메시지와 재시도 버튼이 작동하는지 확인합니다.",
+        "priority": "medium",
+        "dependencies": [
+          "5"
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": "8",
+        "title": "도움됨/도움 안 됨 피드백 기능 구현",
+        "description": "사용자가 변환 결과에 대해 만족도를 평가할 수 있는 버튼을 추가합니다.",
+        "details": "1. 결과창 하단에 '도움됨' 및 '도움 안 됨' 아이콘/버튼 배치.\n2. 버튼 클릭 시 콘솔에 로그를 남기거나 (추후 확장을 위해) 간단한 알림 표시.\n3. 클릭된 버튼의 스타일을 변경하여 투표 완료 상태 시각화.",
+        "testStrategy": "피드백 버튼 클릭 시 UI 상태가 변경되는지 확인합니다.",
+        "priority": "low",
+        "dependencies": [
+          "5"
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": "9",
+        "title": "Vercel 배포 및 최종 검수",
+        "description": "애플리케이션을 Vercel에 배포하고 환경 변수 및 성능을 최종 점검합니다.",
+        "details": "1. `vercel.json` 설정을 통해 Flask 백엔드 서버리스 함수 및 프론트엔드 정적 파일 경로 구성.\n2. Vercel 대시보드에서 `GROQ_API_KEY` 환경 변수 등록.\n3. 전체적인 반응성, 웹 접근성(ARIA 속성), 응답 속도(3초 이내) 최종 확인.",
+        "testStrategy": "배포된 URL에 접속하여 모든 기기(모바일/데스크톱)에서 기능이 정상 작동하는지 통합 테스트를 수행합니다.",
+        "priority": "medium",
+        "dependencies": [
+          "6",
+          "7",
+          "8"
+        ],
+        "status": "pending",
+        "subtasks": []
+      }
+    ],
+    "metadata": {
+      "version": "1.0.0",
+      "lastModified": "2026-02-20T08:52:30.280Z",
+      "taskCount": 9,
+      "completedCount": 0,
+      "tags": [
+        "master"
+      ]
+    }
+  }
+}
