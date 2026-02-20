@@ -1,0 +1,8 @@
+/* 1단계: 기본 스타일 파일 생성 */
+/* 다음 단계에서 PRD에 명시된 스타일 가이드에 따라 채워질 예정입니다. */
+
+body {
+    font-family: sans-serif;
+    line-height: 1.6;
+    padding: 20px;
+}
